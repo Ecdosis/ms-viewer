@@ -32,4 +32,6 @@ Here the "specials" array could be empty, but it is required by Paginator. To pr
 
     java Paginator <folder> <json-config>
 
-This produces a full list of metadata for each file, which you can pipe to an output file. This can then be pased into the index.html file. Obviously this needs to be split up into a service and proper client, but this is just a prototype for now.
+This produces a full list of metadata for each file, which you can pipe to an output file. This can then be passed into the index.html file. Obviously this needs to be split up into a service and proper client, but this is just a prototype for now.
+
+Paginator doesn't pretty-print the JSON. I pasted the output into [Json lint](http://jsonlint.com), validated then copied the cleaned up JSON into the index.html file.
