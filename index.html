@@ -1414,6 +1414,12 @@ function redraw( side )
             break;
     }
 }
+/**
+ * Explicitly load the image and wait until it is FULLY loaded
+ * (jQuery doesn''t do this)
+ * @param jImg the jQuery image object
+ * @param side its orientation
+ */
 function loadImage( jImg, side )
 {
     if ( jImg[0].complete )
@@ -1471,6 +1477,11 @@ function drawImgs(leftPage,rightPage)
     else
         $("#ms-right img").removeAttr("src");
 }
+/**
+ * Check that the page number is recto i=or centred. If not look for the nearest one that is
+ * @param page the raw page index
+ * @return the index of the nearest recto
+ */
 function checkRecto( page )
 {
     if ( pages[page].o == 'r'||pages[page].o =='c' )
