@@ -1,0 +1,16 @@
+#ms-wrapper { vertical-align:middle;display:inline-block;}
+#ms-main {text-align:center}
+#ms-slider {position:relative;top:0;margin-bottom:.5em;margin-left:auto;margin-right:auto}
+#ms-left,#ms-right { display:table-cell;width:50%}
+#ms-left img, #ms-right img {display:block}
+#ms-left img {float:right}
+#ms-right img {float: left}
+#ms-centre { display: none; }
+#ms-left-nav, #ms-right-nav {display:inline-block}
+#go-right,#go-left { vertical-align:middle;opacity: 0.15;display:inline-block }
+#left-sidebar {display:inline}
+#right-sidebar {display:inline}
+#right-sidebar :hover {opacity:0.4;cursor:pointer}
+#left-sidebar :hover {opacity:0.4;cursor:pointer}
+#ms-page-left,#ms-page-right { position: relative; top:0}
+
