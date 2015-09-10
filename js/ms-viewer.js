@@ -1356,7 +1356,7 @@ function redraw( side )
         +dimen($("body").css("margin-bottom"))
         +dimen($("#ms-left").css("border-top-width"))
         +dimen($("#ms-left").css("border-bottom-width"))
-        +$("#ms-slider").height();
+        +$("#ms-slider").outerHeight(true);
     var maxH = Math.max($(window).height(),window.innerHeight)-vmargin;
     var maxW = Math.max($("#ms-left img").width(),$("#ms-right img").width())*2;
     maxW = maxW/2;
@@ -1378,12 +1378,25 @@ function loadImage( jImg, side )
     if ( jImg[0].complete )
     {
         jImg.hide();
-        console.log("width="+jImg.width());
         redraw(side);
         jImg.fadeIn(250);
     }
     else
         window.setTimeout(loadImage,10,jImg,side);
+}
+/**
+ * Draw both lhs and rhs page names only
+ */
+function drawPageNames(leftPage,rightPage) 
+{
+    if ( leftPage != null )
+        $("#ms-page-left").text(leftPage.n);
+    else
+         $("#ms-page-left").text("");
+    if ( rightPage != null )
+        $("#ms-page-right").text(rightPage.n);
+    else
+        $("#ms-page-left").text("");
 }
 /**
  * Draw both lhs and rhs images
@@ -1425,7 +1438,6 @@ function drawImgs(leftPage,rightPage)
             if ( $("#ms-centre").css("display") == 'table-cell' )
                 $("#ms-centre").css("display","none");
             $("#ms-right img").attr("src","B78/"+rightPage.src);
-            console.log("loading "+rightPage.src);
             loadImage( $("#ms-right img"),'r');
             $("#ms-page-right").text(rightPage.n);
         }
@@ -1463,6 +1475,13 @@ $(document).ready(function(){
         min:0,
         max:pages.length-1,
         slide:function(){
+            var value = $("#ms-slider").slider("value");
+            currPage = checkRecto(value);
+            var leftPg = leftPage(currPage);
+            var rightPg = pages[currPage];
+            drawPageNames(leftPg,rightPg);
+        },
+        stop: function() {
             var value = $("#ms-slider").slider("value");
             currPage = checkRecto(value);
             var leftPg = leftPage(currPage);
