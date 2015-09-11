@@ -1332,10 +1332,10 @@ function leftPage( page )
  */
 function setImageWidth( jImg, maxW, maxH )
 {
-    var h = jImg[0].height;
-    var w = jImg[0].width;
-    var scaledW = (maxH/h)*w;
-    var scaledH = (maxW/w)*h;
+    var h = jImg.height();
+    var w = jImg.width();
+    var scaledW = Math.round((maxH/h)*w);
+    var scaledH = Math.round((maxW/w)*h);
     var realW = scaledW;
     var realH = maxH;
     if ( scaledW > maxW )
@@ -1470,6 +1470,90 @@ function checkRecto( page )
     }
 }
 $(document).ready(function(){
+    var magnifyDiv;
+    /**
+     * Get the image side based on current coordinates
+     * @param x the document x-coordinate 
+     * @param y the document y coordinate
+     */
+    function getSide( x, y )
+    {
+        lImg = $("#ms-left img");
+        rImg = $("#ms-right img");
+        cImg = $("#ms-centre img");
+        var lOff = lImg.offset();
+        var rOff = rImg.offset();
+        var cOff = cImg.offset();
+        if ( x >= lOff.left && x <= lOff.left+lImg.width()
+            && y >= lOff.top && y <= lOff.top+lImg.height() )
+            return 'r';
+        else if ( x >= rOff.left && x <= rOff.left+rImg.width()
+            && y >= rOff.top && y <= rOff.top+rImg.height() )
+            return 'v';
+        else if ( x >= cOff.left && x <= cOff.left+cImg.width()
+            && y >= cOff.top && y <= cOff.top+cImg.height() )
+            return 'c';
+        else 
+            return undefined;
+    }
+    /**
+     * Set the background image of the magnify zone
+     * @param m the magnify zone div
+     * @param side the letter (r,v,c) of the current side
+     * @param x the document x-coordinate 
+     * @param y the document y coordinate
+     */
+    function setBackground(m,side,x,y)
+    {
+        var img;
+        switch ( side )
+        {
+            case 'r':
+                img = $("#ms-left img");
+                break;
+            case 'v':
+                img = $("#ms-right img")
+                break;
+            case 'c':
+                img = $("#ms-centre img")
+                break;
+        }
+        var src = img.attr("src");
+        var pos = img.offset();
+        var iW = img.width();
+        var iH = img.height();
+        var localX = x - pos.left;
+        var localY = y - pos.top;
+        var xOff = (localX*100)/iW+11;
+        var yOff = (localY*100)/iH+11;
+        m.css("background-image",'url("'+src+'")');
+        m.css("background-position",xOff+"% "+yOff+"%");
+    }
+    /**
+     * Make the magnify zone visible
+     * @param x the global x coordinate of the mouse click
+     * @param y the global y coordinate of the mouse click
+     * @param side the letter (r,v,c) of the side
+     */
+    function makeZone( x, y, w, side )
+    {
+        var src = "";
+        var pos;
+        var iW, iH;
+        var localX,localY;
+        var origX = x;
+        var origY = y;
+        var xOff=0,yOff=0;
+        magnifyDiv = $("#ms-magnify-zone");
+        x -= w/2;
+        y -= w/2;
+        magnifyDiv.width(w);
+        magnifyDiv.height(w);
+        magnifyDiv.offset({top:y,left:x});
+        setBackground(magnifyDiv,side,origX,origY);
+        magnifyDiv.css("visibility","visible");
+        return magnifyDiv;
+    }
     $("#ms-slider").slider(
     {
         min:0,
@@ -1504,5 +1588,78 @@ $(document).ready(function(){
         var rightPg = pages[currPage];
         var leftPg = leftPage(currPage);
         drawImgs(leftPg,rightPg);
+    });
+    $("#ms-left").mousedown(function(e){
+        magnifyDiv = makeZone(e.pageX,e.pageY,Math.round($("#ms-left").width()/3),'r');
+        return false;
+    });
+    $("#ms-right").mousedown(function(e){
+        magnifyDiv = makeZone(e.pageX,e.pageY,Math.round($("#ms-right").width()/3),'v');
+        return false;
+    });
+    $("#ms-centre").mousedown(function(e){
+        magnifyDiv = makeZone(e.pageX,e.pageY,Math.round($("#ms-centre").width()/6),'c');
+        return false;
+    });
+    $("#ms-magnify-zone").mousemove(function(e){
+        if ( magnifyDiv != undefined )
+        {
+            var w = $("#ms-magnify-zone").width();
+            var x = e.pageX-w/2;
+            var y = e.pageY-w/2;
+            var side = getSide(e.pageX,e.pageY);
+            if ( side !== undefined )
+            {
+                if ( magnifyDiv.css("visibility")=="hidden" )
+                    magnifyDiv.css("visibility","visible");
+                magnifyDiv.offset({top:y,left:x});
+                setBackground(magnifyDiv,side,x,y);
+            }
+            else
+                magnifyDiv.css("visibility","hidden");
+        }
+    });
+    $("#ms-left").mousemove(function(e){
+        if ( magnifyDiv != undefined )
+        {
+            var w = $("#ms-magnify-zone").width();
+            var x = e.pageX-w/2;
+            var y = e.pageY-w/2;
+            var side = getSide(e.pageX,e.pageY);
+            if ( side !== undefined )
+            {
+                if ( magnifyDiv.css("visibility")=="hidden" )
+                    magnifyDiv.css("visibility","visible");
+                magnifyDiv.offset({top:y,left:x});
+                setBackground(magnifyDiv,side,x,y);
+            }
+            else
+                magnifyDiv.css("visibility","hidden");
+        }
+    });
+    $("#ms-right").mousemove(function(e){
+        if ( magnifyDiv != undefined )
+        {
+            var w = $("#ms-magnify-zone").width();
+            var x = e.pageX-w/2;
+            var y = e.pageY-w/2;
+            var side = getSide(e.pageX,e.pageY);
+            if ( side !== undefined )
+            {
+                if ( magnifyDiv.css("visibility")=="hidden" )
+                    magnifyDiv.css("visibility","visible");
+                magnifyDiv.offset({top:y,left:x});
+                setBackground(magnifyDiv,side,x,y);
+            }
+            else
+                magnifyDiv.css("visibility","hidden");
+        }
+    });
+    $(document).mouseup(function(){
+        if ( magnifyDiv !== undefined )
+        {
+            magnifyDiv.css("visibility","hidden");
+            magnifyDiv = undefined;
+        }
     });
 }); 

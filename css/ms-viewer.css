@@ -13,4 +13,5 @@
 #right-sidebar :hover {opacity:0.4;cursor:pointer}
 #left-sidebar :hover {opacity:0.4;cursor:pointer}
 #ms-page-left,#ms-page-right { position: relative; top:0}
-
+#ms-centre,#ms-left,#ms-right:hover {cursor:zoom-in}
+#ms-magnify-zone {position:fixed;visibility:hidden;}
