@@ -1,0 +1,8 @@
+{
+"docid": "english/harpur/A88",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"v","n":"0"},
+{"src":"00000002.jpg","o":"r","n":"1"},
+{"src":"00000003.jpg","o":"r","n":"3"}
+]}

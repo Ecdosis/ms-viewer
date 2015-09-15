@@ -1,0 +1,4 @@
+name = msviewer
+description = View manuscripts in recto/verso of two-page spreads
+core = 7.x
+configure = admin/config/content/msviewer

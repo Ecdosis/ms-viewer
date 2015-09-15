@@ -1,0 +1,11 @@
+{
+"docid": "english/harpur/C386",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"r","n":"front cover"},
+{"src":"00000002.jpg","o":"r","n":"front endpaper"},
+{"src":"00000003.jpg","o":"v","n":"i"},
+{"src":"00000004.jpg","o":"r","n":"1"},
+{"src":"00000137.jpg","o":"r","n":"back endpaper"},
+{"src":"00000138.jpg","o":"r","n":"back cover"}
+]}

@@ -1,0 +1,13 @@
+{
+"docid": "english/harpur/C381",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"r","n":"front cover"},
+{"src":"00000002.jpg","o":"r","n":"1"},
+{"src":"00000126.jpg","o":"r","n":"127"},
+{"src":"00000148.jpg","o":"r","n":"189"},
+{"src":"00000194.jpg","o":"r","n":"289"},
+{"src":"00000196.jpg","o":"r","n":"315"},
+{"src":"00000204.jpg","o":"r","n":"inside back cover"},
+{"src":"00000205.jpg","o":"v","n":"back cover"}
+]}

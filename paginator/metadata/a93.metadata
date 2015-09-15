@@ -1,0 +1,13 @@
+{
+"docid": "english/harpur/A93",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"v","n":"front endpaper"},
+{"src":"00000002.jpg","o":"r","n":"i"},
+{"src":"00000004.jpg","o":"r","n":"1"},
+{"src":"00000005.jpg","o":"v","n":"2a"},
+{"src":"00000006.jpg","o":"r","n":"2"},
+{"src":"00000007.jpg","o":"v","n":"4a"},
+{"src":"00000008.jpg","o":"r","n":"3"},
+{"src":"00000009.jpg","o":"v","n":"6a"}
+]}

@@ -1,0 +1,15 @@
+{
+"docid": "english/harpur/C383",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"r","n":"front cover"},
+{"src":"00000002.jpg","o":"r","n":"inside cover"},
+{"src":"00000003.jpg","o":"v","n":"inside front cover"},
+{"src":"00000004.jpg","o":"r","n":"1"},
+{"src":"00000008.jpg","o":"r","n":"5f"},
+{"src":"00000009.jpg","o":"v","n":"5g"},
+{"src":"00000010.jpg","o":"r","n":"5a-5e"},
+{"src":"00000011.jpg","o":"v","n":"6"},
+{"src":"00000078.jpg","o":"r","n":"inside back cover"},
+{"src":"00000079.jpg","o":"v","n":"back cover"}
+]}

@@ -1,0 +1,41 @@
+<?php
+function msviewer_preprocess_page(&$vars)
+{
+    drupal_add_css(drupal_get_path('module','msviewer').'/css/msviewer.css','file');
+    drupal_add_css(drupal_get_path('module','msviewer').'/css/font-awesome.min.css','file');  
+    drupal_add_css(drupal_get_path('module','msviewer').'/css/jquery-ui.css','file');        
+    drupal_add_css(drupal_get_path('module','msviewer').'/css/jquery-ui.structure.min.css','file');   
+    drupal_add_css(drupal_get_path('module','msviewer').'/css/jquery-ui.theme.min.css','file');
+    drupal_add_js(drupal_get_path('module','msviewer').'/js/msviewer.js','file');
+    drupal_add_js(drupal_get_path('module','msviewer').'/js/jquery-ui.min.js','file');
+    drupal_add_js(drupal_get_path('module','msviewer').'/js/msviewer.js','file');
+}
+function msviewer_block_info() {
+  $blocks['msviewer'] = array(
+    'info' => t('View manuscripts'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  return $blocks;
+}
+function msviewer_help($path, $arg) {
+    switch ($path)
+    {
+        case "admin/help#msviewer":
+            return '<p>' .
+                t("View manuscripts")
+                . '</p>';
+            break;
+    }
+}
+function msviewer_block_view($delta = '') {
+  switch ($delta) {
+    case 'msviewer':
+      $block['subject'] = t('View mansucripts');
+      $mod_path = drupal_get_path('module', 'msviewer');
+      $block['content'] = '<script type="text/javascript" src="'.$mod_path
+          .'/js/msviewer.js?target=content&'
+          .'docid='.$_GET["docid"].'"></script>';
+      return $block;
+  }
+}
+

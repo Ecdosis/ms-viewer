@@ -1,0 +1,11 @@
+{
+"docid": "english/harpur/A94",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"v","n":"i"},
+{"src":"00000004.jpg","o":"r","n":"1"},
+{"src":"00000025.jpg","o":"v","n":"21a"},
+{"src":"00000026.jpg","o":"r","n":"22"},
+{"src":"00000063.jpg","o":"v","n":"58a"},
+{"src":"00000064.jpg","o":"r","n":"59"}
+]}

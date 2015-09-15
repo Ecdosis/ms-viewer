@@ -1,0 +1,10 @@
+{
+"docid": "english/harpur/A98-1",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"v","n":"i"},
+{"src":"00000002.jpg","o":"r","n":"1"},
+{"src":"00000017.jpg","o":"v","n":"15a"},
+{"src":"00000018.jpg","o":"r","n":"15b"},
+{"src":"00000019.jpg","o":"v","n":"16"}
+]}

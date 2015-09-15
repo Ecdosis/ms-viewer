@@ -1,0 +1,11 @@
+{
+"docid": "english/harpur/C378",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"r","n":"front cover"},
+{"src":"00000002.jpg","o":"v","n":"front endpaper"},
+{"src":"00000003.jpg","o":"r","n":"flyleaf 1 recto"},
+{"src":"00000004.jpg","o":"r","n":"flyleaf 2 recto"},
+{"src":"00000005.jpg","o":"r","n":"1a"},
+{"src":"00000021.jpg","o":"r","n":"1b"}
+]}

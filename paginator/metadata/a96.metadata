@@ -1,0 +1,9 @@
+{
+"docid": "english/harpur/A96",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"v","n":"i"},
+{"src":"00000003.jpg","o":"r","n":"iii"},
+{"src":"00000004.jpg","o":"r","n":"iv"},
+{"src":"00000006.jpg","o":"r","n":"1"}
+]}

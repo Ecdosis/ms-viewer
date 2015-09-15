@@ -1,0 +1,10 @@
+{
+"docid": "english/harpur/C377",
+"alternating":true,
+"specials": [
+{"src":"00000001.jpg","o":"r","n":"front cover"},
+{"src":"00000002.jpg","o":"v","n":"inside front cover"},
+{"src":"00000003.jpg","o":"r","n":"1"},
+{"src":"00000137.jpg","o":"r","n":"inside back cover"},
+{"src":"00000138.jpg","o":"v","n":"back cover"}
+]}
