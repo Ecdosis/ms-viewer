@@ -82,13 +82,14 @@ function msviewer(target,docid)
         var scaledH = Math.round((maxW/w)*h);
         var realW = scaledW;
         var realH = maxH;
-        console.log("maxW="+maxW);
         if ( scaledW > maxW )
         {
             realW = maxW;
             realH = scaledH;
         }
         jImg.height(realH);
+        console.log("h="+h+" w="+w+" scaledW="+scaledW
+            +" scaledH="+scaledH+" maxW="+maxW+" maxH="+maxH);
         jImg.css("max-width",maxW+"px");
         var lNav = jQuery("#ms-left-nav");
         var rNav = jQuery("#ms-right-nav");
@@ -106,7 +107,8 @@ function msviewer(target,docid)
         var vmargin = jQuery("#ms-wrapper").offset().top+jQuery("#ms-slider").height();
         var maxH = Math.max(jQuery(window).height(),window.innerHeight)-vmargin;
         var maxW = jQuery("#ms-main").parent().width();
-        maxW = maxW/2;
+        maxW = Math.round(maxW/2);
+        maxH = Math.round(maxH);
         switch ( side )
         {
             case 'v':
@@ -119,6 +121,7 @@ function msviewer(target,docid)
                 this.setImageWidth(jQuery("#ms-centre img"),maxW*2,maxH);
                 break;
         }
+        console.log("redraw side="+side);
     };
     /**
      * Load an image and wait for it to load fuly before you draw it
@@ -130,7 +133,9 @@ function msviewer(target,docid)
         if ( jImg[0].complete )
         {
             jImg.hide();
+            console.log("about to redraw");
             this.redraw(side);
+            console.log("redrawn!");
             jImg.fadeIn(250);
         }
         else
@@ -168,7 +173,7 @@ function msviewer(target,docid)
         else
         { 
              jQuery("#ms-left img").removeAttr("src");
-             jQuery("#ms-left img").hide();
+             jQuery("#ms-left").css("display",'none' );
              jQuery("#ms-page-left").text("");
         }
         if ( rightPage != null )
