@@ -94,6 +94,7 @@ function msviewer(target,docid)
             realH = otherH;
         jImg.height(realH);
         jImg.css("max-width",maxW+"px");
+        jImg.css("max-height",maxH+"px");
         return realW;
     };
     /**
@@ -102,7 +103,7 @@ function msviewer(target,docid)
      */
     this.redraw = function( side )
     {
-        var vmargin = jQuery("#ms-wrapper").offset().top+jQuery("#ms-slider").height();
+        var vmargin = jQuery("#ms-wrapper").offset().top+jQuery("#ms-slider").outerHeight(true);
         var maxH = Math.max(jQuery(window).height(),window.innerHeight)-vmargin;
         var maxW = jQuery("#ms-main").parent().width();
         maxW = Math.round(maxW/2);
@@ -129,7 +130,6 @@ function msviewer(target,docid)
     {
         if ( jImg[0].complete )
         {
-            jImg.hide();
             self.redraw(side);
             jImg.fadeIn(250);
         }
@@ -175,8 +175,10 @@ function msviewer(target,docid)
         {
             if ( jQuery("#ms-left").css("display") == 'none' )
                 jQuery("#ms-left").css("display","table-cell");
-            jQuery("#ms-left img").attr("src","/corpix/"+this.docid+"/"+leftPage.src);
-            this.loadImage( jQuery("#ms-left img"), 'v' );
+            var jImg = jQuery("#ms-left img");
+            jImg.hide();
+            jImg.attr("src","/corpix/"+this.docid+"/"+leftPage.src);
+            this.loadImage( jImg, 'v' );
             jQuery("#ms-page-left").text(leftPage.n);
             if ( rightPage != null )
                 jQuery("#ms-centre").css("display","none");
@@ -191,8 +193,10 @@ function msviewer(target,docid)
         {
             if ( rightPage.o=='c' )
             {
-                jQuery("#ms-centre img").attr("src","/corpix/"+this.docid+"/"+rightPage.src);
-                this.loadImage( jQuery("#ms-centre img"), 'c' );
+                var jImg = jQuery("#ms-centre img");
+                jImg.attr("src","/corpix/"+this.docid+"/"+rightPage.src);
+                jImg.hide();
+                this.loadImage( jImg, 'c' );
                 if ( jQuery("#ms-centre").css("display") == 'none' )
                     jQuery("#ms-centre").css("display","table-cell");
                 jQuery("#ms-left").css("display","none");
@@ -201,12 +205,14 @@ function msviewer(target,docid)
             }
             else
             {
+                var jImg = jQuery("#ms-right img");
                 if ( jQuery("#ms-right").css("display") == 'none' )
                     jQuery("#ms-right").css("display","table-cell");
                 if ( jQuery("#ms-centre").css("display") == 'table-cell' )
                     jQuery("#ms-centre").css("display","none");
-                jQuery("#ms-right img").attr("src","/corpix/"+this.docid+"/"+rightPage.src);
-                this.loadImage( jQuery("#ms-right img"),'r');
+                jImg.hide();
+                jImg.attr("src","/corpix/"+this.docid+"/"+rightPage.src);
+                this.loadImage( jImg,'r');
                 jQuery("#ms-page-right").text(rightPage.n);
             }
         }
