@@ -5,6 +5,7 @@ function msviewer(target,docid)
 {
     this.target = target;
     this.docid = docid;
+    var self = this;
     /**
      * Get the actual dimension value from a 123px value
      * @param d the parameter with "px" on the end
@@ -73,8 +74,9 @@ function msviewer(target,docid)
      * @param jImg the jQuery image object
      * @param maxW its maximum width
      * @param maxH its maximum height
+     * @param otherH 0 or the i=height of the other img
      */
-    this.setImageWidth = function( jImg, maxW, maxH )
+    this.setImageWidth = function( jImg, maxW, maxH, otherH )
     {
         var h = jImg.height();
         var w = jImg.width();
@@ -87,15 +89,11 @@ function msviewer(target,docid)
             realW = maxW;
             realH = scaledH;
         }
+        // force the 2 sides to be the same
+        if ( otherH != 0 )
+            realH = otherH;
         jImg.height(realH);
-        console.log("h="+h+" w="+w+" scaledW="+scaledW
-            +" scaledH="+scaledH+" maxW="+maxW+" maxH="+maxH);
         jImg.css("max-width",maxW+"px");
-        var lNav = jQuery("#ms-left-nav");
-        var rNav = jQuery("#ms-right-nav");
-        var gap = Math.round(jImg.width()/20);
-        lNav.css("left","-"+(gap+Math.round(lNav.width()))+"px");
-        rNav.css("right","-"+(gap+Math.round(rNav.width()))+"px");
         return realW;
     };
     /**
@@ -112,19 +110,18 @@ function msviewer(target,docid)
         switch ( side )
         {
             case 'v':
-                this.setImageWidth(jQuery("#ms-left img"),maxW,maxH);
+                this.setImageWidth(jQuery("#ms-left img"),maxW,maxH,0);
                 break;
             case 'r':
-                this.setImageWidth(jQuery("#ms-right img"),maxW,maxH);
+                this.setImageWidth(jQuery("#ms-right img"),maxW,maxH,jQuery("#ms-left img").height());
                 break;
             case 'c':
                 this.setImageWidth(jQuery("#ms-centre img"),maxW*2,maxH);
                 break;
         }
-        console.log("redraw side="+side);
     };
     /**
-     * Load an image and wait for it to load fuly before you draw it
+     * Load an image and wait for it to load fully before you draw it
      * @param jImg the jQuery image object
      * @param side the side to redraw it on ('r', 'v' or 'c')
      */
@@ -133,13 +130,13 @@ function msviewer(target,docid)
         if ( jImg[0].complete )
         {
             jImg.hide();
-            console.log("about to redraw");
-            this.redraw(side);
-            console.log("redrawn!");
+            self.redraw(side);
             jImg.fadeIn(250);
         }
         else
-            window.setTimeout(this.loadImage,10,jImg,side);
+        {
+            window.setTimeout(self.loadImage,10,jImg,side);
+        }
     };
     /**
      * Draw both lhs and rhs page names only
@@ -154,6 +151,20 @@ function msviewer(target,docid)
             jQuery("#ms-page-right").text(rightPage.n);
         else
             jQuery("#ms-page-left").text("");
+    };
+    /**
+     * Resize and position the two navigation divs
+     */
+    this.resizeNavs = function()
+    {
+        var lNav = jQuery("#ms-left-nav");
+        var rNav = jQuery("#ms-right-nav");
+        var jImg = jQuery("#ms-right img");
+        if ( jImg == undefined || jImg.width()==0 )
+            jImg = jQuery("#ms-left img");
+        var gap = Math.round(jImg.width()/20);
+        lNav.css("left","-"+(gap+Math.round(lNav.width()))+"px");
+        rNav.css("right","-"+(gap+Math.round(rNav.width()))+"px");
     };
     /**
      * Draw both lhs and rhs images
@@ -201,6 +212,7 @@ function msviewer(target,docid)
         }
         else
             jQuery("#ms-right img").removeAttr("src");
+        self.resizeNavs();
     };
     /**
      * Check that the page index in question is for a recto
@@ -235,8 +247,6 @@ function msviewer(target,docid)
     /* these functions are called by the event handlers directly */
     /* div that we hide and make visible contianing the magnified portion */
     this.magnifyDiv = undefined;
-    /* we need a reference to the object so we can refer to it below */
-    var self = this;
     /**
      * Get the image side based on current coordinates
      * @param x the document x-coordinate 
@@ -342,6 +352,7 @@ function msviewer(target,docid)
                 var leftPg = self.leftPage(currPage);
                 var rightPg = self.pages[currPage];
                 self.drawPageNames(leftPg,rightPg);
+                self.resizeNavs();
             },
             /* called when we release the mouse */
             stop: function() {
@@ -443,7 +454,8 @@ function msviewer(target,docid)
         });
     };
     /* Download all the page specifications in JSON format */
-    jQuery.get( "http://"+window.location.hostname+"/pages/anthology/?docid="+this.docid, function(data)
+    jQuery.get( "http://"+window.location.hostname+"/pages/anthology/?docid="+this.docid,
+    function(data)
     {
         self.pages = data;
         var html = '<div id="ms-main">';
